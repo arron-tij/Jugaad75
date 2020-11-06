@@ -1,0 +1,256 @@
+{% extends "tracker/base.html" %}
+
+
+
+{% block content %}
+
+<style> 
+    table { 
+        border-collapse: collapse; 
+    } 
+    th { 
+        background-color:green; 
+        Color:white; 
+    } 
+    th, td { 
+        width: auto; 
+        text-align:center; 
+        border:1px solid black; 
+        padding:5px 
+      
+    } 
+    .geeks { 
+        border-right:hidden; 
+    } 
+    .gfg { 
+        border-collapse:separate; 
+        border-spacing:0 15px; 
+    } 
+    h1 { 
+        color:green; 
+    } 
+</style> 
+
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h1>Your Time-Table</h2>
+        </div>
+    </div>
+
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <td >         </td>
+                    <th  >  9:00 AM to 10:00 AM  </th>
+                    <th >  10:00 AM to 11:00 AM </th>
+                    <th >  11:00 AM 12:00 noon  </th>
+                </tr>
+                </thead>
+
+            <tbody>
+
+                <tr> 
+                    
+                    <td align="center" style="color: red;font-size: larger; "  >Monday </td>
+                    
+                    
+                    <td id="box1" align="center">    
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="monday_slot1_name" class="form-control" id="monday_slot1_name" value="{{table.monday_slot1_name}}" >
+ 
+                    <label for="latitude">Latitude</label>  
+                    <input type="text" name="monday_slot1_latitude" class="form-control" id="monday_slot1_latitude"  value="{{table.monday_slot1_latitude}}" >
+                    
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="monday_slot1_longitude" class="form-control" id="monday_slot1_longitude"  value="{{table.monday_slot1_longitude}}"  >
+                    </td>
+               
+
+                    <td id="box2" align="center" >    
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="monday_slot2_name" class="form-control" id="monday_slot2_name" value="{{table.monday_slot2_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="monday_slot2_latitude" class="form-control" id="monday_slot2_latitude"  value="{{table.monday_slot2_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="monday_slot2_longitude" class="form-control" id="monday_slot2_longitude"  value="{{table.monday_slot2_longitude}}"  >
+                    </td> 
+
+                    <td id="box3" align="center">    
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="monday_slot3_name" class="form-control" id="monday_slot3_name" value="{{table.monday_slot3_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="monday_slot3_latitude" class="form-control" id="monday_slot3_latitude"  value="{{table.monday_slot3_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="monday_slot3_longitude" class="form-control" id="monday_slot3_longitude"  value="{{table.monday_slot3_longitude}}"  >
+                    </td>
+
+                </tr>
+
+
+
+                <tr> 
+                        <td id="sub" align="center" style="color: red;font-size: larger; ">Tuesday  </td>
+                    
+                    
+                    <td align="center">   
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="tuesday_slot1_name" class="form-control" id="tuesday_slot1_name" value="{{table.tuesday_slot1_name}}" >
+                    <label for="latitude">Latitude</label>  
+                    <input type="text" name="tuesday_slot1_latitude" class="form-control" id="tuesday_slot1_latitude"  value="{{table.tuesday_slot1_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="tuesday_slot1_longitude" class="form-control" id="tuesday_slot1_longitude"  value="{{table.tuesday_slot1_longitude}}"  >
+                    </td>   
+                    
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="tuesday_slot2_name" class="form-control" id="tuesday_slot2_name" value="{{table.tuesday_slot2_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="tuesday_slot2_latitude" class="form-control" id="tuesday_slot2_latitude"  value="{{table.tuesday_slot2_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="tuesday_slot2_longitude" class="form-control" id="tuesday_slot2_longitude"  value="{{table.tuesday_slot2_longitude}}"  >
+                    </td>
+
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="tuesday_slot3_name" class="form-control" id="tuesday_slot3_name" value="{{table.tuesday_slot3_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="tuesday_slot3_latitude" class="form-control" id="tuesday_slot3_latitude"  value="{{table.tuesday_slot3_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="tuesday_slot3_longitude" class="form-control" id="tuesday_slot3_longitude"  value="{{table.tuesday_slot3_longitude}}"  >
+                    </td>
+
+
+
+                </tr>
+
+                <tr> 
+                        <td id="sub" align="center" style="color: red;font-size: larger; " >Wednesday </td>
+                
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="wednesday_slot1_name" class="form-control" id="wednesday_slot1_name" value="{{table.wednesday_slot1_name}}" >
+                    <label for="latitude">Latitude</label>  
+                    <input type="text" name="wednesday_slot1_latitude" class="form-control" id="wednesday_slot1_latitude"  value="{{table.wednesday_slot1_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="wednesday_slot1_longitude" class="form-control" id="wednesday_slot1_longitude"  value="{{table.wednesday_slot1_longitude}}"  >
+                    </td>
+
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="wednesday_slot2_name" class="form-control" id="wednesday_slot2_name" value="{{table.wednesday_slot2_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="wednesday_slot2_latitude" class="form-control" id="wednesday_slot2_latitude"  value="{{table.wednesday_slot2_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="wednesday_slot2_longitude" class="form-control" id="wednesday_slot2_longitude"  value="{{table.wednesday_slot2_longitude}}"  >
+                   </td>
+
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="wednesday_slot3_name" class="form-control" id="wednesday_slot3_name" value="{{table.wednesday_slot3_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="wednesday_slot3_latitude" class="form-control" id="wednesday_slot3_latitude"  value="{{table.wednesday_slot3_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="wednesday_slot3_longitude" class="form-control" id="wednesday_slot3_longitude"  value="{{table.wednesday_slot3_longitude}}"  >
+                    </td>
+
+                    
+                </tr>
+
+
+                <tr> 
+                    <td id="sub" align="center" style="color: red;font-size: larger; " >Thrusday </td>
+            
+                    
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="thrusday_slot1_name" class="form-control" id="thrusday_slot1_name" value="{{table.thrusday_slot1_name}}" >
+                    <label for="latitude">Latitude</label>  
+                    <input type="text" name="thrusday_slot1_latitude" class="form-control" id="thrusday_slot1_latitude"  value="{{table.thrusday_slot1_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="thrusday_slot1_longitude" class="form-control" id="thrusday_slot1_longitude"  value="{{table.thrusday_slot1_longitude}}"  >
+                    </td>
+
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="thrusday_slot2_name" class="form-control" id="thrusday_slot2_name" value="{{table.thrusday_slot2_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="thrusday_slot2_latitude" class="form-control" id="thrusday_slot2_latitude"  value="{{table.thrusday_slot2_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="thrusday_slot2_longitude" class="form-control" id="thrusday_slot2_longitude"  value="{{table.thrusday_slot2_longitude}}"  >
+                    </td>
+
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="thrusday_slot3_name" class="form-control" id="thrusday_slot3_name" value="{{table.thrusday_slot3_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="thrusday_slot3_latitude" class="form-control" id="thrusday_slot3_latitude"  value="{{table.thrusday_slot3_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="thrusday_slot3_longitude" class="form-control" id="thrusday_slot3_longitude"  value="{{table.thrusday_slot3_longitude}}"  >
+                    </td>
+
+                </tr>
+
+    
+                <tr> 
+                    <td id="sub" align="center" style="color: red;font-size: larger; " >Friday  </td>
+            
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="friday_slot1_name" class="form-control" id="friday_slot1_name" value="{{table.friday_slot1_name}}" >
+                    <label for="latitude">Latitude</label>  
+                    <input type="text" name="friday_slot1_latitude" class="form-control" id="friday_slot1_latitude"  value="{{table.friday_slot1_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="friday_slot1_longitude" class="form-control" id="friday_slot1_longitude"  value="{{table.friday_slot1_longitude}}"  >
+                    </td>
+
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="friday_slot2_name" class="form-control" id="friday_slot2_name" value="{{table.friday_slot2_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="friday_slot2_latitude" class="form-control" id="friday_slot2_latitude"  value="{{table.friday_slot2_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="friday_slot2_longitude" class="form-control" id="friday_slot2_longitude"  value="{{table.friday_slot2_longitude}}"  >
+                    </td>
+
+                    <td align="center">  
+                    <label for="latitude">Lecture Name</label>
+                    <input type="text" name="friday_slot3_name" class="form-control" id="friday_slot3_name" value="{{table.friday_slot3_name}}" >
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="friday_slot3_latitude" class="form-control" id="friday_slot3_latitude"  value="{{table.friday_slot3_latitude}}" >
+                    <label for="latitude">Longitude</label>
+                    <input type="text" name="friday_slot3_longitude" class="form-control" id="friday_slot3_longitude"  value="{{table.friday_slot3_longitude}}"  >
+                    </td>
+
+           
+                </tr>
+
+    
+                    
+                       </tbody>
+                     </table>
+                
+                <div class="row justify-content-center mt-5">
+                <button  type="submit" class="btn btn-primary" style="align-content: center;" >Save</button>
+                </div>
+
+                <br>
+                <br>
+                <br>
+
+
+            </form>
+   
+{% endblock %}
+
+<!-- fields = ['name', 'latitude' , 'longitude', 'day', 'start_time', 'end_time']    -->
