@@ -1,0 +1,52 @@
+{% extends "tracker/base.html" %}
+
+{% block content %}
+ 
+
+    <br>
+    <br>
+    <h1 style="color: purple;"> Hello....{{user.username}}  This is your Time table <h1>
+
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            {% if lectures %}
+                 <h1>{{ lectures.count }} Lecture{{ lectures.count|pluralize }} are going on in this weekend :) </h1>
+            {% endif %}
+        </div>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+    
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+        {% if lectures %}
+            <div class="list-group">
+                {% for lecture in lectures %}
+
+                    {% if {{lecture.name}} exists %}
+                        <input type="text" name="title" class="form-control" id="title" value="{{ lecture.name }}" required>
+                        <li> {{lecture.name }} is scheduled from {{lecture.start_time}}  to {{lecture.end_time}} on {{lecture.week_day}} at  {{lecture.latitude}} , {{lecture.longitude}}  location  </li>
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h2> Hurray you have no lectures ((::)) </h2>
+            <br>
+
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+    </form>
+
+
+{% endblock %}
+
+

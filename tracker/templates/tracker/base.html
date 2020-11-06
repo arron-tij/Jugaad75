@@ -19,10 +19,16 @@
     <a class="navbar-brand" href="{% url 'home' %}">
         <span style="color:darkorange;" >Attendence Tracker 
     </a>
+
+    <a class="navbar-brand" href="{% url 'addLecture' %}">
+        <span style="color:darkorange;" > Update Time-Table
+    </a>
+    
     
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    
     <div class="collapse navbar-collapse" id="navbarNav">
 
     <ul class="navbar-nav ml-auto">
@@ -35,7 +41,10 @@
                     </form>
                 </li>
 
-                <li style="color: greenyellow ;  font-size: xx-large;" > {{user.username}} </li>
+
+                <li class="nav-item">
+                    <p class="nav-link" style="color: greenyellow ;  " style="color: darkorange;">    </a>
+                </li>
 
             {% else %}
                 <li class="nav-item">

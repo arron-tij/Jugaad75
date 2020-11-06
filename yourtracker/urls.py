@@ -28,4 +28,12 @@ urlpatterns = [
     path('logout/', views.logoutuser , name='logoutuser'),
     path('login/', views.loginuser , name='loginuser'),
 
+    
+    # timetable creation
+    path('addLecture/', views.addLecture , name='addLecture'),
+
+
+    # path('time_table/', views.time_table , name='time_table'),
+
+
 ]
