@@ -14,6 +14,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 import geopy.distance
 from geopy.distance import geodesic
+from django.http import HttpResponse
 def getLocation():
     # Remove this next line
     return (23.00,86.00)
@@ -214,7 +215,7 @@ def addLecture(request):
             # print(request.user)
 
             l=Lecture.objects.filter(student=request.user).first()
-            lecture_copy.objects.all().delete()
+           
             
             if(l.monday_slot1_name!="None"):
                 try: 
@@ -301,3 +302,54 @@ def addLecture(request):
             return redirect('home') 
         except ValueError:
             return render(request, 'tracker/addLecture.html',{ 'table': table, 'form': addLectureForm , 'error': 'Try again.. data is not valid' } )
+
+@csrf_exempt
+def markProxy(request):
+    print("mark")
+    curr_slot = getSlot()
+    if curr_slot == 5:
+        return HttpResponse("No classes Running")
+    if request.method == "POST":
+        print("mark2")
+        sid = request.POST['sid']
+        user_benefitting = User.objects.get(id=sid)
+        print(user_benefitting.username)
+        clec = Lecture.objects.get(student=user_benefitting)
+        reqd_coord = reqdLocation(clec)
+        instance = lecture_copy.objects.get(student=user_benefitting,lecture_name=reqd_coord[2])
+        instance.lecture_count = instance.lecture_count + int(1)
+        instance.tot_lecture_count = instance.tot_lecture_count + int(1)
+        instance.save()
+        if curr_slot == 1:
+            instnc = sdata.objects.get(student=user_benefitting)
+            instnc.slot1 = 1
+            instnc.save()
+        elif curr_slot == 2:
+            instnc = sdata.objects.get(student=user_benefitting)
+            instnc.slot2 = 1
+            instnc.save()
+        elif curr_slot == 3:
+            instnc = sdata.objects.get(student=user_benefitting)
+            instnc.slot3 = 1
+            instnc.save()
+
+    if curr_slot == 1:
+        context = {
+            'absentees' : sdata.objects.filter(slot1=0)
+        }
+        return render(request,'tracker/proxy.html',context)
+    elif curr_slot == 2:
+        context = {
+            'absentees' : sdata.objects.filter(slot2=0)
+        }
+        return render(request,'tracker/proxy.html',context)
+    elif curr_slot == 3:
+        context = {
+            'absentees' : sdata.objects.filter(slot3=0)
+        }
+        return render(request,'tracker/proxy.html',context)
+    else:
+        context = {
+            'absentees' : sdata.objects.filter(slot3=0)
+        }
+        return render(request,'tracker/proxy.html',context)
