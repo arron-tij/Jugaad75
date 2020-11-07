@@ -1,7 +1,11 @@
 {% extends "tracker/base.html" %}
 
 {% block content %}
- 
+
+
+<center>
+
+
 
 <br>
 <br>
@@ -9,7 +13,37 @@
 <br>
 {% if user.is_authenticated %}
 {% for attd in attendances %}
-    <h2>{{attd.lecture_name}} : {{attd.lecture_count}} / {{attd.tot_lecture_count}}</h2>
+
+
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" style="color:blueviolet ; font-weight: 800; font-size: larger; " > {{attd.lecture_name}} </h5>
+          <p class="card-text"> You have attended {{attd.lecture_count}} lectures out of total {{attd.tot_lecture_count}} lectures </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Manual Control</h5>
+          <p class="card-text"></p>
+          <a href="#" class="btn btn-success"> Increase </a>
+          <a href="#" class="btn btn-danger"> Decrease </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 {% endfor %}
 {%endif%}
+
+</center>
+
+
 {% endblock %}
+
+
+
