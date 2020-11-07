@@ -320,6 +320,9 @@ def markProxy(request):
         instance.lecture_count = instance.lecture_count + int(1)
         instance.tot_lecture_count = instance.tot_lecture_count + int(1)
         instance.save()
+        instance = classroom.objects.get(student=request.user)
+        instance.proxies_marked = instance.proxies_marked + int(1)
+        instance.save()
         if curr_slot == 1:
             instnc = sdata.objects.get(student=user_benefitting)
             instnc.slot1 = 1
@@ -353,3 +356,9 @@ def markProxy(request):
             'absentees' : sdata.objects.filter(slot3=0)
         }
         return render(request,'tracker/proxy.html',context)
+
+def hallOfFame(request):
+    context = {
+        'fames' : classroom.objects.all().order_by('-proxies_marked')
+    }
+    return render(request,'tracker/proxy_fame.html',context)

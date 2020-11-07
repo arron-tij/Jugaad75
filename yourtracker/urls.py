@@ -32,7 +32,7 @@ urlpatterns = [
     # timetable creation
     path('addLecture/', views.addLecture , name='addLecture'),
     path('markProxy/', views.markProxy , name='markProxy'),
-
+    path('hallOfFame/', views.hallOfFame , name='hallOfFame'),
     # path('time_table/', views.time_table , name='time_table'),
 
 
