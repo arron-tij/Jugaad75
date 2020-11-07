@@ -14,6 +14,7 @@ class lecture_copy(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     lecture_name = models.CharField(max_length=100, default="None")
     lecture_count = models.IntegerField(default=0)
+    tot_lecture_count = models.IntegerField(default=0)
 
     def __str__(self):
         return "%s" %   (self.student) + " lecture--> "  + (self.lecture_name)
