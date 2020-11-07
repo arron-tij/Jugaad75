@@ -14,10 +14,11 @@
         <a class="navbar-brand" href="{% url 'markProxy' %}">
             <span style="color:darkorange;" > Mark a proxy
         </a>
-        
+
         <a class="navbar-brand" href="{% url 'hallOfFame' %}">
             <span style="color:darkorange;" > Proxy Hall Of Fame
         </a>
+        
         
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -59,26 +60,10 @@
  <h1> Welcome {{user.username}} <h1>
 <br>
 
-{% for abs in absentees %}
+{% for fame in fames %}
 <div class="card">
   <div class="card-body">
-    {{abs.student.username}}
-    <button type="submit" onclick="markproxy({{abs.student.id}})" class="btn btn-success">Mark</button>
+    {{fame.student.username}} : {{fame.proxies_marked}}
   </div>
 </div>
 {% endfor %}
-
-<script>
-    function markproxy(val){
-        console.log(val);
-        $.ajax({
-            url:"{% url 'markProxy' %}",
-            method:"POST",
-            data:{
-                sid : val,
-            },
-        })
-        window.location.href="/markProxy/";
-    }
-</script>
-
