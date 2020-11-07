@@ -5,8 +5,11 @@
 
 <br>
 <br>
- <h1>  you are at home .. {{user.username}} <h1>
-
-
-
+ <h1> Welcome {{user.username}} <h1>
+<br>
+{% if user.is_authenticated %}
+{% for attd in attendances %}
+    <h2>{{attd.lecture_name}} : {{attd.lecture_count}} / {{attd.tot_lecture_count}}</h2>
+{% endfor %}
+{%endif%}
 {% endblock %}

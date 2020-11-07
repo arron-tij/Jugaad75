@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -16,8 +16,7 @@ import geopy.distance
 from geopy.distance import geodesic
 def getLocation():
     # Remove this next line
-    # return (23.00,86.00)
-
+    return (23.00,86.00)
     options = Options()
     options.add_argument("--use-fake-ui-for-media-stream")
     timeout = 20
@@ -98,12 +97,26 @@ def reqdLocation(clec):
 
 def home(request):
     curr_slot = getSlot()
+    # print(curr_slot)
+    if request.user.is_authenticated:
+        context = {
+            'attendances' : lecture_copy.objects.filter(student=request.user)
+        }
+    else:
+        context = {
+            
+        }
     if request.user.is_authenticated and curr_slot != 4:
-        clec = Lecture.objects.get(student=request.user)
+        try:
+            clec = Lecture.objects.get(student=request.user)
+        except:
+            return render(request,'tracker/home.html',context)
         reqd_coord = reqdLocation(clec)
+        print(reqd_coord)
         if reqd_coord[0] == 0.00 and reqd_coord[1] == 0.00:
-            return render(request,'tracker/home.html')
+            return render(request,'tracker/home.html',context)
         curr_coord = getLocation()
+        print(getLocation())
         instance = sdata.objects.get(student=request.user)
         instance.slat = curr_coord[0]
         instance.slong = curr_coord[1]
@@ -119,10 +132,18 @@ def home(request):
                 instance.slot3 = 1
             instnc = lecture_copy.objects.get(student=request.user,lecture_name=reqd_coord[2])
             instnc.lecture_count = instnc.lecture_count + int(1)
+            instnc.tot_lecture_count = instnc.tot_lecture_count + int(1)
+            instnc.save()
+        else:
+            instnc = lecture_copy.objects.get(student=request.user,lecture_name=reqd_coord[2])
+            instnc.tot_lecture_count = instnc.tot_lecture_count + int(1)
             instnc.save()
         instance.save()
-    return render(request,'tracker/home.html')
-   
+        return render(request,'tracker/home.html',context)
+    
+    return render(request,'tracker/home.html',context)
+
+@csrf_exempt
 def signupuser(request):
 
     if request.method =='GET':
@@ -196,39 +217,84 @@ def addLecture(request):
             lecture_copy.objects.all().delete()
             
             if(l.monday_slot1_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.monday_slot1_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.monday_slot1_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.monday_slot1_name,lecture_count=0)
             if(l.monday_slot2_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.monday_slot2_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.monday_slot2_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.monday_slot2_name,lecture_count=0)
             if(l.monday_slot3_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.monday_slot3_name,lecture_count=0)               
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.monday_slot3_name)
+                except: 
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.monday_slot3_name,lecture_count=0)               
 
             if(l.tuesday_slot1_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.tuesday_slot1_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.tuesday_slot1_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.tuesday_slot1_name,lecture_count=0)
             if(l.tuesday_slot2_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.tuesday_slot2_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.tuesday_slot2_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.tuesday_slot2_name,lecture_count=0)
             if(l.tuesday_slot3_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.tuesday_slot3_name,lecture_count=0)               
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.tuesday_slot3_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.tuesday_slot3_name,lecture_count=0)               
 
             if(l.wednesday_slot1_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.wednesday_slot1_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.wednesday_slot1_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.wednesday_slot1_name,lecture_count=0)
             if(l.wednesday_slot2_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.wednesday_slot2_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.wednesday_slot2_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.wednesday_slot2_name,lecture_count=0)
             if(l.wednesday_slot3_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.wednesday_slot3_name,lecture_count=0)   
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.wednesday_slot3_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.wednesday_slot3_name,lecture_count=0)   
 
             if(l.thrusday_slot1_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.thrusday_slot1_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.thrusday_slot1_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.thrusday_slot1_name,lecture_count=0)
             if(l.thrusday_slot2_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.thrusday_slot2_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.thrusday_slot2_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.thrusday_slot2_name,lecture_count=0)
             if(l.thrusday_slot3_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.thrusday_slot3_name,lecture_count=0)               
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.thrusday_slot3_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.thrusday_slot3_name,lecture_count=0)               
 
             if(l.friday_slot1_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.friday_slot1_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.friday_slot1_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.friday_slot1_name,lecture_count=0)
             if(l.friday_slot2_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.friday_slot2_name,lecture_count=0)
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.friday_slot2_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.friday_slot2_name,lecture_count=0)
             if(l.friday_slot3_name!="None"):
-                lecture_copy.objects.create(student=request.user,lecture_name=l.friday_slot3_name,lecture_count=0)               
+                try: 
+                    lecture_copy.objects.get(student=request.user,lecture_name=l.friday_slot3_name)
+                except:
+                    lecture_copy.objects.create(student=request.user,lecture_name=l.friday_slot3_name,lecture_count=0)               
 
               
 
